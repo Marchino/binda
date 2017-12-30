@@ -1,4 +1,4 @@
-<div id="standard-form--image-<%= field_setting.id %>" class="standard-form--image">
+<div id="standard-form--image-<%= field_setting.id %>" class="standard-form--image form-item">
   <div id="fileupload-<%= ff.object.id %>" 
     class="fileupload form-group">
 
@@ -14,10 +14,14 @@
         object: ff.object,
         wrapper: false,
         input_html: {
-          'data-url': url_for([@instance.structure, @instance, action: :upload]),
+          'data-url': url_for([
+            @instance.structure, 
+            @instance, 
+            action: :upload, 
+            repeater: { id: "#{field_setting.parent_id}" }]),
           'data-id': ff.object.id 
         } %>
-      
+
     </div>
 
     <%= ff.input :image_cache, as: :hidden %>

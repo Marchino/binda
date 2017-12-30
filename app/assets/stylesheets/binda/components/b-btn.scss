@@ -2,14 +2,23 @@
 {
   transition: background-color .3s ease-out;
   color: $color-white;
-  background-color: $color-gray-darker;
   border: 1px solid $color-gray-darker;
+  background-color: #333;
 }
 
-.b-btn-primary:hover
+.b-btn-primary
 {
-  border: 1px solid $color-gray;
-  background-color: $color-gray;
+  &:hover
+  {
+    color: $color-white;
+    border: 1px solid $color-gray;
+    background-color: $color-gray;
+  }
+
+  &:focus
+  {
+    color: $color-white;
+  }
 }
 
 .b-btn-danger
@@ -19,34 +28,87 @@
   background-color: $color-danger;
 }
 
-.b-btn-danger:hover
+.b-btn-danger
 {
-  color: $color-white;
-  background-color: darken($color-danger, 15%);
+  &:hover
+  {
+    color: $color-white;
+    background-color: darken($color-danger, 15%);
+  }
+
+  &:focus
+  {
+    color: $color-white;
+  }
 }
 
 .b-btn-outline-danger
 {
+  transition: color .3s ease, background-color .3s ease;
   color: $color-danger;
-  transition: color background-color .3s ease-out;
   border: 1px solid $color-danger;
   background-color: transparent;
 }
 
-.b-btn-outline-danger:hover
+.b-btn-outline-danger
 {
-  color: $color-white;
-  background-color: $color-danger;
+  &:hover
+  {
+    color: $color-white;
+    background-color: $color-danger;
+  }
+
+  &:focus
+  {
+    color: $color-white;
+    background-color: $color-danger;
+  }
+}
+
+.b-btn-alternative
+{
+  transition: background-color .3s ease-out;
+  color: $text-color;
+  background-color: $color-white;
+}
+
+.b-btn-alternative
+{
+  &:hover
+  {
+    color: $text-color;
+    background-color: $color-gray-light;
+  }
 }
 
 .b-btn
 {
-  padding: 8px 12px;
-  border-radius: 0;
+  display: inline-block;
+  padding: 6px 12px;
   cursor: pointer;
+  border-radius: 0;
 
   i
   {
     padding-right: 6px;
   }
+}
+
+.b-btn-settings
+{
+  margin-bottom: 12px;
+}
+
+.b-btn-block
+{
+  display: block;
+  float: left;
+  clear: left;
+
+  margin-left: 0px !important;
+}
+
+.b-btn--container {
+  margin-top: 32px;
+  margin-bottom: 40px;
 }

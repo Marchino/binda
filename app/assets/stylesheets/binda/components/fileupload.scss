@@ -21,6 +21,10 @@
     transform: translate(-50%, -50%);
     text-align: center;
   }
+
+  video {
+    display: none;
+  }
 }
 
 .fileupload--preview--uploaded
@@ -31,6 +35,10 @@
   p
   {
     display: none;
+  }
+
+  video {
+    display: block
   }
 }
 
@@ -68,10 +76,11 @@
 
 .fileupload label.control-label
 {
+  @extend .b-btn;
+  @extend .p;
   font-weight: 300;
   margin-right: 20px;
   margin-bottom: 20px;
-  padding: 8px 12px;
   cursor: pointer; /* "hand" cursor */
 
   *
@@ -116,4 +125,10 @@
 {
   pointer-events: none;
   opacity: 0;
+  width: 0; // Odd but needed, otherwise it occupies few transparent pixels...
+  display: none;
+}
+
+.standard-form--video .fileupload--dimension {
+  display: none;
 }

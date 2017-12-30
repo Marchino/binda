@@ -24,10 +24,7 @@ module Binda
     # Relations are the connection between a Owner to its Dependents
     # The Active Relation connects a Relation to a Dependent (which is can be a Component or a Board)
     # The Passive Relation connects a Relation to a Owner (which is can be a Component or a Board)
-    has_many :active_relations, class_name: "RelationLink", 
-                                dependent: :destroy, 
-                                as: :dependent
-    has_many :passive_relations, class_name: "RelationLink", 
+    has_many :dependent_relations, class_name: "RelationLink", 
                                  dependent: :destroy, 
                                  as: :owner
 
@@ -37,52 +34,45 @@ module Binda
     # you can do just the opposite: choose a Dependent starting from a Owner
     # 
     # The current version support components and boards separately
-    has_many :dependent_components, through: :passive_relations, 
+    has_many :dependent_components, through: :dependent_relations, 
                                     source: :dependent, 
                                     source_type: "Binda::Component"
                                     
-    # Owner are connected to its Dependents in a Active Relation
-    # meaning its possible to connect a Owner to as many Dependents
-    # as it's needed.
-    # 
-    # The current version support components and boards separately
-    has_many :owner_components, through: :active_relations, 
-                                source: :owner, 
-                                source_type: "Binda::Component"
 
     # Owner are connected to its Dependents in a Active Relation
     # meaning its possible to connect a Owner to as many Dependents
     # as it's needed.
     # 
     # The current version support components and boards separately
-    has_many :dependent_boards, through: :passive_relations, 
+    has_many :dependent_boards, through: :dependent_relations, 
                                 source: :dependent, 
                                 source_type: "Binda::Board"
 
-    has_many :owner_boards, through: :active_relations, 
-                            source: :owner, 
-                            source_type: "Binda::Board"
-
 
     # Owner are connected to its Dependents in a Active Relation
     # meaning its possible to connect a Owner to as many Dependents
     # as it's needed.
     # 
     # The current version support components and boards separately
-    has_many :dependent_repeaters, through: :passive_relations, 
+    has_many :dependent_repeaters, through: :dependent_relations, 
                                 source: :dependent, 
                                 source_type: "Binda::Repeater"
 
-    has_many :owner_repeaters, through: :active_relations, 
-                            source: :owner, 
-                            source_type: "Binda::Repeater"
 
     # Makes sure that the group of related components doesn't include the component that owns the group
     # in other words makes sure that the component doesn't relate to itself
-    validates_each :owner_component_ids do |model, attr, value| 
-        if model.fieldable_type == 'Binda::Component' && value.include?(model.fieldable_id)
-            model.errors.add(attr, "#{FieldSetting.find(model.field_setting_id).name.capitalize} contains a reference to the current #{model.fieldable_type.constantize.find(model.fieldable_id).structure.name.capitalize}")
-        end
+    validates_each :dependent_component_ids do |model, attr, value| 
+      if model.fieldable_type == 'Binda::Component' && value.include?(model.fieldable_id)
+        model.errors.add(attr, "#{FieldSetting.find(model.field_setting_id).name.capitalize} contains a reference to the current #{model.fieldable_type.constantize.find(model.fieldable_id).structure.name.capitalize}")
+      end
+    end    
+
+    # Makes sure that the group of related components doesn't include the component that owns the group
+    # in other words makes sure that the component doesn't relate to itself
+    validates_each :dependent_board_ids do |model, attr, value| 
+      if model.fieldable_type == 'Binda::Board' && value.include?(model.fieldable_id)
+        model.errors.add(attr, "#{FieldSetting.find(model.field_setting_id).name.capitalize} contains a reference to the current #{model.fieldable_type.constantize.find(model.fieldable_id).structure.name.capitalize}")
+      end
     end
 
   end
