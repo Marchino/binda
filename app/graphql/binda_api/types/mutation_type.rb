@@ -1,4 +1,4 @@
-Types::MutationType = GraphQL::ObjectType.define do
+BindaApi::Types::MutationType = GraphQL::ObjectType.define do
   name "Mutation"
 
   # TODO: Remove me
