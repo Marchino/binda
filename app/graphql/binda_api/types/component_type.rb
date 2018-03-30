@@ -1,9 +1,12 @@
 BindaApi::Types::ComponentType = GraphQL::ObjectType.define do
   name "Binda_Component"
 
-  field :id, !types.ID
-  field :name, !types.String
-  field :slug, !types.String
+  field :id, types.ID
+  field :name, types.String
+  field :slug, types.String
+  field :publish_state, types.String
+
+  field :structure, BindaApi::Types::StructureType
 
   field :get_string, BindaApi::Types::TextType do
     argument :slug, !types.String
